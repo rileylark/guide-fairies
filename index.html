@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+
+</head>
+<body ng-controller="MainController" class="container">
+
+<div class="row">
+    <h1>Angular-Guide <small>Fairies for your Features and Functions!</small></h1>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <button class="btn btn-default"
+                    ng-click="showStop('firstStop')"
+                    guide-stop="firstStop"
+                    guide-explanation-template-url="explainFirstStop.html"
+                    >Start the tour
+            </button>
+            <button class="btn btn-default" ng-click="guide.dismissFairy()">Dismiss Fairy</button>
+        </div>
+        <div class="row">
+            <button class="btn btn-default" ng-click="showStop('header2stop')">Show Header 2 Stop</button>
+
+            <button class="btn btn-default" ng-click="showAsynchronousTemplate = !showAsynchronousTemplate">Show async
+                template
+            </button>
+        </div>
+
+        <h1>
+            Header 1
+        </h1>
+        <hr/>
+        <ng-include src="'templateThatAppearsAsynchronously.html'" ng-if="showAsynchronousTemplate">
+
+        </ng-include>
+        <p style="width: 500px; height: 200px; border: 1px solid black">
+            This is a bunch of text!
+        </p>
+        <span guide-stop="header2stop"
+              guide-on-fairy-tickle="fairy.dismiss(); showFairyPreferences.header2stop = false">
+            Header 2
+        </span>
+    </div>
+    <div class="col-md-4">
+        <h1>"Show Fairy" preferences </h1>
+        <p>Maybe you want to save these on your server?</p>
+
+        <form role="form">
+            <div class="checkbox" ng-repeat="(preferenceName, preferenceValue) in showFairyPreferences">
+                <input type="checkbox" ng-model="showFairyPreferences[preferenceName]"/>{{preferenceName}}
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="templateThatAppearsAsynchronously.html">
+    <span guide-stop="header3stop" 
+          guide-on-fairy-tickle="showStop('header2stop')">
+        Header 3
+    </span>
+</script>
+
+<script type="text/ng-template" id="explainFirstStop.html">
+    <div style="background-color: white; border: 1px solid black; padding: 2em;">
+        <h1>This is the first stop</h1>
+
+        <p>When you click the next button we will go to the next stop.</p>
+        <button class="btn btn-primary"
+                ng-click="hideExplanation(); showStop('header2stop')">
+            Go to the next stop
+        </button>
+    </div>
+</script>
+
+<style>
+    .guideFairy {
+        width: 20px;
+        height: 20px;
+        background-color: plum;
+        border: 1px solid papayawhip;
+        cursor: pointer;
+    }
+</style>
+
+<script type="text/ng-template" id="template/guideFairy.html">
+
+    <div class="guideFairyPositioner">
+        <style>
+            .guideFairyPositioner {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: all ease-in-out 0.4s;
+            }
+        </style>
+        <div class="guideFairy"
+             ng-if="!showingExplanation"
+             ng-click="tickle()">
+        </div>
+        <div ng-if="showingExplanation" ng-include="explanationUrl">
+        </div>
+    </div>
+
+</script>
+
+
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+<script src="js/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script data-main="js/main" src="js/libs/requirejs/require.js"></script>
+
+</body>
+</html>

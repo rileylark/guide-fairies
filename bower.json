@@ -1,0 +1,28 @@
+{
+  "name": "guide-fairies",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rileylark/guide-fairies",
+  "authors": [
+    "Riley Eynon-Lynch <riley@peardeck.com>"
+  ],
+  "description": "Use fairies to guide your users to the controls and features of your AngularJS app",
+  "main": "js/guide-fairies.js",
+  "keywords": [
+    "AngularJS",
+    "guide",
+    "UI",
+    "fairies",
+    "fairy"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "js/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
