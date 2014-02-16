@@ -57,6 +57,45 @@
 </span>
 </pre>
 
+<h3>Easily link explanation templates to a guide stop</h3>
+<button guide-stop="explanationStop"
+        ng-click="retablize()"
+        guide-explanation-template-url="whatIsRetablizing.html">
+    Center and Retablize
+</button>
+
+<pre class="prettyprint">
+&lt;button guide-stop=&quot;explanationStop&quot;
+        ng-click=&quot;retablize()&quot;
+        guide-explanation-template-url=&quot;whatIsRetablizing.html&quot;&gt;
+    Center and Retablize
+&lt;/button&gt;
+</pre>
+
+<script type="text/ng-template" id="whatIsRetablizing.html">
+    <div style="background-color: white; width: 500px;">
+    <h1>Whoa, this app lets you <i>Retablize!</i></h1>
+    <p>
+        Normal programs only let you tablize once, but this super-great app lets you
+        retablize up to 63 times!
+    </p>
+    <p>
+        This paragraph succinctly (but thoroughly!) shows you what retablizing is, why other programs suck for not having it, and why you are going to be so much better at that thing you do when you can finally retablize.
+    </p>
+    <button ng-click="fairy.dismiss()">
+        Got it!
+    </button>
+
+            <hr/>
+            Check this out: explanation templates have the current fairy injected into their $scope... which automatically updates even if different fairies stop at the same stop!
+<pre class="prettyprint">
+&lt;button ng-click=&quot;fairy.dismiss()&quot;&gt;
+    Got it!
+&lt;/button&gt;
+</pre>
+    </div>
+</script>
+
 <h2>Flexible guide service manages the fairies</h2>
 
 

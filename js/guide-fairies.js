@@ -124,6 +124,8 @@ define([], function () {
                             fairy.stop = stop;
                             fairyScope.classFromStop = stop.fairyClass;
                             fairyScope.tickle = function () {
+                                //TODO: we should not be sending the fairy out of this code.
+                                //      it is private and we assume we have complete control of it.
                                 stop.tickle({showStop: guide.showStop, fairy: fairy});
                             };
 

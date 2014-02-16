@@ -21,6 +21,11 @@ require(['guide-fairies'], function (guideFairies) {
         // like this it might be better to publish an event bus that the
         // guide runner can listen to... maybe version 2?
         $scope.showFeatures = featureRunner.showFeatures;
+
+        //this is a feature of the demo app, completely unrelated to the fairy guide.
+        $scope.retablize = function() {
+            alert("Wow, you retablized!  You can retablize up to 62 more times!");
+        }
     }]);
 
     app.factory('demoFeaturesGuideRunner', ['$rootScope', 'guideService',
@@ -53,6 +58,7 @@ require(['guide-fairies'], function (guideFairies) {
                 guide.showStop('classStop3');
 
                 guide.showStop('positionStop');
+                guide.showStop('explanationStop');
             }
         }]);
 
