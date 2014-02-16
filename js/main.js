@@ -51,6 +51,8 @@ require(['guide-fairies'], function (guideFairies) {
                 guide.showStop('classStop1');
                 guide.showStop('classStop2');
                 guide.showStop('classStop3');
+
+                guide.showStop('positionStop');
             }
         }]);
 
