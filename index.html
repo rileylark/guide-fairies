@@ -24,9 +24,37 @@
 <h1>
     <span guide-stop="featuresHeader">The Features</span>
 </h1>
+
 <h2>
-    <span guide-stop=""Guide Fairies and Guide Stops</h2>
+    <span guide-stop="fairiesAndStops">
+        Guide Fairies and Guide Stops
+    </span>
+</h2>
+
 <h2>Configure appearance and position from the DOM (natch)</h2>
+
+<h3>Give fairies different classes as they move through stops</h3>
+
+<pre class="prettyprint">
+    <span guide-stop="classStop0" guide-fairy-class="green">
+&lt;span guide-stop='classStop0'<br/>      guide-fairy-class='green'&gt;<br/>  One Stop<br/>&lt;/span&gt;
+    </span>
+    <span guide-stop="classStop1" guide-fairy-class="green big">
+&lt;span guide-stop='classStop1'<br/>      guide-fairy-class='green big'&gt;<br/>  Two Stop<br/>&lt;/span&gt;
+    </span>
+    <span guide-stop="classStop2" guide-fairy-class="red">
+&lt;span guide-stop='classStop2'<br/>      guide-fairy-class='red'&gt;<br/>  Red Stop<br/>&lt;/span&gt;
+    </span>
+    <span guide-stop="classStop3" guide-fairy-class="blue">
+&lt;span guide-stop='classStop3'
+      guide-fairy-class='blue'&gt;
+  Blue Stop!
+&lt;/span&gt;
+    </span>
+</pre>
+<!--
+
+-->
 <h2>Flexible guide service manages the fairies</h2>
 
 
@@ -38,11 +66,28 @@
         border: 1px solid papayawhip;
         cursor: pointer;
     }
+
+    .green .guideFairy {
+        background-color: green;
+    }
+
+    .red .guideFairy {
+        background-color: red;
+    }
+
+    .blue .guideFairy {
+        background-color: blue;
+    }
+
+    .big .guideFairy {
+        width: 40px;
+        height: 40px;
+    }
 </style>
 
 <script type="text/ng-template" id="template/guideFairy.html">
 
-    <div class="guideFairyPositioner">
+    <div class="guideFairyPositioner" ng-class="classFromStop">
         <style>
             .guideFairyPositioner {
                 position: absolute;
@@ -61,7 +106,7 @@
 
 </script>
 
-
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
 <script src="js/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>

@@ -147,6 +147,8 @@ define([], function () {
                 tickle: '&guideOnFairyTickle'
             },
             link: function (scope, element, attrs) {
+
+                console.log("Got class: " + attrs.guideFairyClass);
                 var stop = {
                     element: element,
                     name: attrs.guideStop,
