@@ -22,11 +22,16 @@ require(['guide-fairies'], function (guideFairies) {
         // guide runner can listen to... maybe version 2?
         $scope.showFeatures = featureRunner.showFeatures;
 
-        //this is a feature of the demo app, completely unrelated to the fairy guide.
-        $scope.retablize = function() {
-            alert("Wow, you retablized!  You can retablize up to 62 more times!");
-        }
 
+        // the following functions look like pollution of the controller,
+        // but these would really be features of your app.  You can see
+        // the current level of integration you need - when something happens
+        // which requires a change to the fairy, we can just call the
+        // appropriate function in featureRunner.
+        //
+        // In my app I actually $emit events that my guideRunner is listening for.
+        // I also have a tracking service that is recording for analytics, and both
+        // systems can consume the same events.
         $scope.seriesStopNumber = 1;
         $scope.showNextSeriesStop = function() {
             //this would also be a function of your app, but this one needs to
@@ -42,6 +47,12 @@ require(['guide-fairies'], function (guideFairies) {
 
         $scope.hideAllSeriesFairies = function() {
             featureRunner.hideSeriesFairies();
+        }
+
+
+        //this is a feature of the demo app, completely unrelated to the fairy guide.
+        $scope.retablize = function() {
+            alert("Wow, you retablized!  You can retablize up to 62 more times!");
         }
     }]);
 
