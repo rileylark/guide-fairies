@@ -12,11 +12,12 @@ define([], function () {
         return function position(fairyElement, alignmentElement, fairyPositioning) {
             var rect = alignmentElement[0].getBoundingClientRect();
             var top = rect.top + $window.scrollY;
-            var left = rect.right + $window.scrollX;
+            var left;
 
             if (fairyPositioning === 'right') {
-                //no adjustments required
+                left = rect.right + $window.scrollX;
             } else if (fairyPositioning === 'left') {
+                left = rect.left + $window.scrollX;
                 var fairyRect = fairyElement[0].getBoundingClientRect();
                 left = left - fairyRect.width;
             }
