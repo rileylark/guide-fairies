@@ -8,18 +8,6 @@
 <h1>Angular-Guide
     <small>Fairies for your Features and Functions!</small>
 </h1>
-<button
-        ng-click="showFeatures()"
-        guide-stop="showFeaturesButton"
-        guide-on-fairy-tickle="showFeatures()"
-        guide-explanation-template-url="explainFirstStop.html"
-        >
-    Show Me The Features
-</button>
-<button class="btn btn-default"
-        ng-click="guide.dismissFairy()">
-    Show Me How It Works
-</button>
 
 <h1>
     <span guide-stop="featuresHeader">The Features</span>
@@ -32,6 +20,14 @@
 </h2>
 
 <h2>Configure appearance and position from the DOM (natch)</h2>
+
+<button
+        ng-click="showFeatures()"
+        guide-stop="showFeaturesButton"
+        guide-on-fairy-tickle="showFeatures()"
+        >
+    Show Me The Features
+</button>
 
 <h3>Give fairies different classes as they move through stops</h3>
 
@@ -61,7 +57,7 @@
 <button guide-stop="explanationStop"
         ng-click="retablize()"
         guide-explanation-template-url="whatIsRetablizing.html">
-    Center and Retablize
+    Center and Retablize (click the fairy!)
 </button>
 
 <pre class="prettyprint">

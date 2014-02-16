@@ -95,8 +95,6 @@ require(['guide-fairies'], function (guideFairies) {
             };
 
             function showFeatures() {
-                guide.showStop('featuresHeader', 'FEATURE_FAIRY');
-
                 guide.showStop('classStop0');
                 guide.showStop('classStop1');
                 guide.showStop('classStop2');
