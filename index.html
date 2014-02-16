@@ -98,7 +98,49 @@
 
 <h2>Flexible guide service manages the fairies</h2>
 
+<h3>Send one fairy to multiple stops in succession by specifying a name</h3>
 
+<button ng-click="showNextSeriesStop()">Same feature, next step!  Send the same fairy</button>
+<button ng-click="showNextNewGuyStop()">Omg, new feature!  Send a new fairy!</button>
+<button ng-click="hideAllSeriesFairies()">I get it, hide the fairies</button>
+<style>
+    .seriesStopContainer span {
+        margin: 100px;
+    }
+</style>
+<div class="seriesStopContainer">
+<span guide-stop="seriesStop0" guide-on-fairy-tickle="fairy.dismiss()">
+    Stop 0
+</span>
+<span guide-stop="seriesStop1" guide-on-fairy-tickle="fairy.dismiss()">
+    Stop 1
+</span>
+<span guide-stop="seriesStop2" guide-on-fairy-tickle="fairy.dismiss()">
+    Stop 2
+</span>
+<span guide-stop="seriesStop3" guide-on-fairy-tickle="fairy.dismiss()">
+    Stop 3
+</span>
+</div>
+
+<pre class="prettyprint">
+showSeriesStop: function(stopNumber) {
+    // specifying which fairy you want by name (in this case
+    // with 'SERIES_FAIRY') causes the service to reuse the same
+    // fairy if possible.  Great for sequential introductions!
+    guide.showStop('seriesStop' + stopNumber, 'SERIES_FAIRY');
+},
+
+showNewGuyStop: function(stopNumber) {
+    guide.showStop('seriesStop' + stopNumber);
+},
+
+hideSeriesFairies: function() {
+    for (var i = 0; i &lt; 4; i++) {
+        guide.dismissFairy('seriesStop' + i);
+    }
+}
+</pre>
 <style>
     .guideFairy {
         width: 20px;

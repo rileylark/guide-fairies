@@ -26,6 +26,23 @@ require(['guide-fairies'], function (guideFairies) {
         $scope.retablize = function() {
             alert("Wow, you retablized!  You can retablize up to 62 more times!");
         }
+
+        $scope.seriesStopNumber = 1;
+        $scope.showNextSeriesStop = function() {
+            //this would also be a function of your app, but this one needs to
+            //know a little bit about the guide to send the fairies to the next step
+            $scope.seriesStopNumber = ($scope.seriesStopNumber + 1) % 4;
+            featureRunner.showSeriesStop($scope.seriesStopNumber)
+        }
+
+        $scope.showNextNewGuyStop = function() {
+            $scope.seriesStopNumber = ($scope.seriesStopNumber + 1) % 4;
+            featureRunner.showNewGuyStop($scope.seriesStopNumber);
+        }
+
+        $scope.hideAllSeriesFairies = function() {
+            featureRunner.hideSeriesFairies();
+        }
     }]);
 
     app.factory('demoFeaturesGuideRunner', ['$rootScope', 'guideService',
@@ -46,7 +63,24 @@ require(['guide-fairies'], function (guideFairies) {
 
                 showFeatures: showFeatures,
 
-                showStop: guide.showStop
+                showStop: guide.showStop,
+
+                showSeriesStop: function(stopNumber) {
+                    // specifying which fairy you want by name (in this case
+                    // with 'SERIES_FAIRY') causes the service to reuse the same
+                    // fairy if possible.  Great for sequential introductions!
+                    guide.showStop('seriesStop' + stopNumber, 'SERIES_FAIRY');
+                },
+
+                showNewGuyStop: function(stopNumber) {
+                    guide.showStop('seriesStop' + stopNumber);
+                },
+
+                hideSeriesFairies: function() {
+                    for (var i = 0; i < 4; i++) {
+                        guide.dismissFairy('seriesStop' + i);
+                    }
+                }
             };
 
             function showFeatures() {
