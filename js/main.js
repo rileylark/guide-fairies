@@ -20,7 +20,10 @@ require(['guide-fairies'], function (guideFairies) {
         // to the guide service.  Instead of linking functions directly
         // like this it might be better to publish an event bus that the
         // guide runner can listen to... maybe version 2?
-        $scope.showFeatures = featureRunner.showFeatures;
+        $scope.showFeatures = function() {
+            featureRunner.showFeatures();
+            $scope.featureButtonsDisabled = true;
+        };
 
 
         // the following functions look like pollution of the controller,
@@ -95,7 +98,7 @@ require(['guide-fairies'], function (guideFairies) {
             };
 
             function showFeatures() {
-                guide.showStop('classStop0');
+                guide.showStop('classStop0', 'FEATURE_FAIRY');
                 guide.showStop('classStop1');
                 guide.showStop('classStop2');
                 guide.showStop('classStop3');
