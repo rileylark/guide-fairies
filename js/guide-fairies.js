@@ -34,17 +34,14 @@ define([], function () {
                 var guide = {
                     showStop: function (stopName, fairyName) {
                         fairyName = fairyName || ('unique' + Math.random());  //come up with a new name if none was supplied
-                        tracker.getStop(stopName)
-                            .then(function (stop) {
-                                getFairy(fairyName).send(stop);
-                            });
+                        getFairy(fairyName).send(stopName);
                     },
 
                     dismissFairy: function (stopName) {
                         for (var fairyName in fairies) {
                             var fairy = fairies[fairyName];
 
-                            if (fairy && fairy.stop && fairy.stop.name == stopName) {
+                            if (fairy && fairy.stopName === stopName) {
                                 fairy.dismiss();
                             }
                         }
@@ -65,16 +62,17 @@ define([], function () {
                     fairyScope.showStop = guide.showStop;
 
                     function reposition() {
-                        if (fairyScope.stop) {
-                            var alignmentElement;
-                            if (fairyScope.showingExplanation && fairyScope.stop.explanationAlignmentElement) {
-                                alignmentElement = angular.element(document.querySelector('#' + fairyScope.stop.explanationAlignmentElement))
-                            } else {
-                                alignmentElement = fairyScope.stop.element;
-                            }
+                        tracker.getStop(fairy.stopName)
+                            .then(function(stop) {
+                                var alignmentElement;
+                                if (fairyScope.showingExplanation && stop.explanationAlignmentElement) {
+                                    alignmentElement = angular.element(document.querySelector('#' + stop.explanationAlignmentElement))
+                                } else {
+                                    alignmentElement = stop.element;
+                                }
 
-                            position(fairyElement, alignmentElement, fairyScope.stop.fairyPositioning);
-                        }
+                                position(fairyElement, alignmentElement, stop.fairyPositioning);
+                            });
                     }
 
                     var repositionerPromise = $interval(reposition, 500);
@@ -117,19 +115,22 @@ define([], function () {
                             fairyScope.explanationUrl = explanationUrl;
                             fairyScope.showingExplanation = true;
                         },
-                        send: function (stop) {
+                        send: function (stopName) {
                             cancelDismissal();
-                            fairyScope.showingExplanation = false;
-                            fairyScope.stop = stop;
-                            fairy.stop = stop;
-                            fairyScope.classFromStop = stop.fairyClass;
-                            fairyScope.tickle = function () {
-                                //TODO: we should not be sending the fairy out of this code.
-                                //      it is private and we assume we have complete control of it.
-                                stop.tickle({showStop: guide.showStop, fairy: fairy});
-                            };
+                            tracker.getStop(stopName)
+                                .then(function(stop) {
 
-                            $timeout(reposition);
+                                    fairyScope.showingExplanation = false;
+                                    fairy.stopName = stopName;
+
+                                    fairyScope.classFromStop = stop.fairyClass;
+                                    fairyScope.tickle = function () {
+                                        //TODO: we should not be sending the fairy out of this code.
+                                        //      it is private and we assume we have complete control of it.
+                                        stop.tickle({showStop: guide.showStop, fairy: fairy});
+                                    };
+                                    $timeout(reposition);
+                                });
                         }
                     };
 
@@ -150,7 +151,6 @@ define([], function () {
             },
             link: function (scope, element, attrs) {
 
-                console.log("Got class: " + attrs.guideFairyClass);
                 var stop = {
                     element: element,
                     name: attrs.guideStop,
@@ -256,7 +256,7 @@ define([], function () {
                 if (registeredStops[stopName]) {
                     return $q.when(registeredStops[stopName]);
                 } else {
-                    if (typeof waitingGets[stopName] === 'undefined') {
+                    if (!waitingGets[stopName]) {
                         waitingGets[stopName] = $q.defer();
                     }
                     return waitingGets[stopName].promise;
