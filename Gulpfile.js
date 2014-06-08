@@ -22,6 +22,10 @@ gulp.task('build', function () {
         .pipe(templateCache())
         .pipe(gulp.dest('demo'));
 
+    gulp.src('src/demoApp/**/*.css')
+        .pipe(concat('styles.css'))
+        .pipe(gulp.dest('demo'));
+
     gulp.src('src/demoApp/demoApp.js')
         .pipe(gulp.dest('demo/js'));
 

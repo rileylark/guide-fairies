@@ -1,8 +1,1 @@
-<!DOCTYPE html><html><head><title>Welcoming (and training) with Fairies</title><style>.guideFairy {
-  width: 20px;
-  height: 20px;
-  background-color: plum;
-  border: 1px solid papayawhip;
-  cursor: pointer;
-}
-</style></head><body ng-app="FairyDemo" ng-controller="MainDemoController"><h1>Welcoming (and training) with Fairies</h1><button guide-stop="showFeaturesButton">Show Features</button><script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script><!-- include guide-fairies.js in your own app--><script src="../dist/guide-fairies.js"></script><!-- replace demoApp.js with your app--><script src="js/demoApp.js"></script></body></html>
+<!DOCTYPE html><html><head><title>Welcoming (and training) with Fairies</title><link rel="stylesheet" href="styles.css"></head><body ng-app="FairyDemo" ng-controller="MainDemoController"><div class="container"><div class="jumbotron"><h1>Fairy Guides</h1><p class="lead">Help your users learn to use your application with Fairies (like the little fairies in slack)</p><button guide-stop="showFeaturesButton" guide-fairy-class="fairy--read-on-button" class="btn btn-primary btn-lg">Read On</button></div></div><script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script><!-- include guide-fairies.js in your own app--><script src="../dist/guide-fairies.js"></script><!-- replace demoApp.js with your app--><script src="js/demoApp.js"></script></body></html>

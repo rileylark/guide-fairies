@@ -1,10 +1,4 @@
-.guideFairyPositioner(ng-class='classFromStop')
-  style.
-    .guideFairyPositioner {
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: all ease-in-out 0.4s;
-    }
-  .guideFairy(ng-if='!showingExplanation', ng-click='tickle()')
-  ng-include(ng-if='showingExplanation', src='explanationUrl')
+.fairy(ng-class="showingExplanation ? '' : classFromStop" ng-click="showingExplanation ? noop() : tickle()")
+  .fairy__radiator(ng-show="!showingExplanation")
+  .fairy__blip(ng-show="!showingExplanation")
+  .fairy__info(ng-show="showingExplanation", ng-include="explanationUrl")

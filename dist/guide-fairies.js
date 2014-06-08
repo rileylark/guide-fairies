@@ -365,4 +365,4 @@
     }]);
 
 }());
-angular.module("guide-fairies").run(["$templateCache", function($templateCache) {$templateCache.put("guideFairy.html","<div ng-class=\"classFromStop\" class=\"guideFairyPositioner\"><style>.guideFairyPositioner {\n  position: absolute;\n  top: 0;\n  left: 0;\n  transition: all ease-in-out 0.4s;\n}</style><div ng-if=\"!showingExplanation\" ng-click=\"tickle()\" class=\"guideFairy\"></div><ng-include ng-if=\"showingExplanation\" src=\"explanationUrl\"></ng-include></div>");}]);
+angular.module("guide-fairies").run(["$templateCache", function($templateCache) {$templateCache.put("guideFairy.html","<div ng-class=\"showingExplanation ? \'\' : classFromStop\" ng-click=\"showingExplanation ? noop() : tickle()\" class=\"fairy\"><div ng-show=\"!showingExplanation\" class=\"fairy__radiator\"></div><div ng-show=\"!showingExplanation\" class=\"fairy__blip\"></div><div ng-show=\"showingExplanation\" ng-include=\"explanationUrl\" class=\"fairy__info\"></div></div>");}]);

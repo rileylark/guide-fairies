@@ -3,7 +3,7 @@ guide-fairies
 
 Fairy-led guide through your angular app
 
-Incredible demo: http://rileylark.github.io/guide-fairies
+Incredible demo: http://rileylark.github.io/guide-fairies/demo
 
 
 ## Installation

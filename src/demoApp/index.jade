@@ -3,19 +3,23 @@ html
   head
     title Welcoming (and training) with Fairies
 
-    style.
-      .guideFairy {
-        width: 20px;
-        height: 20px;
-        background-color: plum;
-        border: 1px solid papayawhip;
-        cursor: pointer;
-      }
+    link(rel='stylesheet', href='styles.css')
+
 
   body(ng-app='FairyDemo', ng-controller='MainDemoController')
-    h1 Welcoming (and training) with Fairies
 
-    button(guide-stop='showFeaturesButton') Show Features
+    .container
+      .jumbotron
+
+          h1 Fairy Guides
+          p.lead Help your users learn to use your application with Fairies (like the little fairies in slack)
+
+          button.btn.btn-primary.btn-lg(guide-stop='showFeaturesButton'
+                                        guide-fairy-class='fairy--read-on-button')
+            | Read On
+
+
+
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js')
 
