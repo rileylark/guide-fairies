@@ -1,0 +1,10 @@
+.guideFairyPositioner(ng-class='classFromStop')
+  style.
+    .guideFairyPositioner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: all ease-in-out 0.4s;
+    }
+  .guideFairy(ng-if='!showingExplanation', ng-click='tickle()')
+  ng-include(ng-if='showingExplanation', src='explanationUrl')

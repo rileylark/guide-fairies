@@ -1,11 +1,6 @@
-//in case you're not using requireJS, this just makes a quick define function so this code will work anyway
-var define = define || function (dependencies, definer) {
-    definer();
-};
-
-define([], function () {
+(function () {
     'use strict';
-    var undefined;
+
     var angularGuide = angular.module('guide-fairies', []);
 
     angularGuide.factory('$$guideFairiesPositionService', ['$window', function ($window) {
@@ -36,7 +31,7 @@ define([], function () {
                         fairyManagementService.getFairy(fairyName).send(stopName);
                     },
 
-                    showExplanation: function(fairyName) {
+                    showExplanation: function (fairyName) {
                         fairyManagementService.getFairy(fairyName).showExplanation();
                     },
 
@@ -49,7 +44,7 @@ define([], function () {
                     }
                 };
 
-                tracker.addGuideStopUnlinkedHandler(function(stopName) {
+                tracker.addGuideStopUnlinkedHandler(function (stopName) {
                     fairyManagementService.dismissAnyFairiesAtStop(stopName);
                 });
 
@@ -100,7 +95,7 @@ define([], function () {
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'template/guideFairy.html',
+            templateUrl: 'guideFairy.html',
             controller: ['$scope', function ($scope) {
                 $scope.hideExplanation = function () {
                     $scope.showingExplanation = false;
@@ -149,127 +144,127 @@ define([], function () {
 
     angularGuide.factory('$$fairyManagementService', [
         '$$guideStopTrackerService', '$$guideFairiesPositionService', '$timeout', '$compile', '$rootElement', '$rootScope', '$interval',
-        function(tracker, position, $timeout, $compile, $rootElement, $rootScope, $interval) {
-        var fairies = {};
+        function (tracker, position, $timeout, $compile, $rootElement, $rootScope, $interval) {
+            var fairies = {};
 
-        function getFairy(fairyName) {
-            if (!fairies[fairyName]) {
-                fairies[fairyName] = createNewFairy(fairyName);
-            }
-
-            return fairies[fairyName];
-        }
-
-
-        function createNewFairy(fairyName) {
-
-            var fairyScope = $rootScope.$new();
-
-            function reposition() {
-                tracker.getStop(fairy.stopName)
-                    .then(function(stop) {
-                        if (!fairyScope) {
-                            return; //this fairy was destroyed before getStop resolved :(
-                        }
-
-                        var alignmentElement;
-                        if (fairyScope.showingExplanation && stop.explanationAlignmentElement) {
-                            alignmentElement = angular.element(document.querySelector('#' + stop.explanationAlignmentElement))
-                        } else {
-                            alignmentElement = stop.element;
-                        }
-
-                        position(fairyElement, alignmentElement, stop.fairyPositioning);
-                    });
-            }
-
-            var repositionerPromise = $interval(reposition, 500);
-
-            fairyScope.$watch('showingExplanation', function () {
-                $timeout(function() {
-                    if (fairyScope) {  //unfortunately angular is triggering this $watch even after fairyScope.$destroy() :(
-                        reposition();
-                    }
-                });
-            });
-
-            fairyScope.$on('$destroy', function () {
-                $interval.cancel(repositionerPromise);
-            });
-
-            var fairyElement = $compile('<guide-fairy />')(fairyScope);
-            $rootElement.eq(0).append(fairyElement);
-
-            function cancelDismissal() {
-                if (fairy.dismissalOrder) {
-                    $timeout.cancel(fairy.dismissalOrder);
-                    fairy.dismissalOrder = null;
+            function getFairy(fairyName) {
+                if (!fairies[fairyName]) {
+                    fairies[fairyName] = createNewFairy(fairyName);
                 }
+
+                return fairies[fairyName];
             }
 
-            function dismiss(lingerDelay) {
-                lingerDelay = lingerDelay || 0;
-                if (!fairy.dismissalOrder) {
-                    fairy.dismissalOrder = $timeout(function () {
-                        fairyElement.remove();
-                        fairyElement = null;
-                        fairyScope.$destroy();
-                        fairyScope = null;
-                        fairies[fairyName] = null;
-                    }, lingerDelay); //we want to linger around a little in case this fairy is sent somewhere else
-                }
-            }
 
-            var fairy = {
-                dismiss: dismiss,
-                showExplanation: function (explanationUrl) {
-                    cancelDismissal();
-                    if (explanationUrl) {
-                        fairyScope.explanationUrl = explanationUrl;
-                    }
-                    fairyScope.showingExplanation = true;
-                },
-                send: function (stopName) {
-                    cancelDismissal();
-                    tracker.getStop(stopName)
-                        .then(function(stop) {
+            function createNewFairy(fairyName) {
+
+                var fairyScope = $rootScope.$new();
+
+                function reposition() {
+                    tracker.getStop(fairy.stopName)
+                        .then(function (stop) {
                             if (!fairyScope) {
                                 return; //this fairy was destroyed before getStop resolved :(
                             }
 
-                            fairyScope.showingExplanation = false;
-                            fairyScope.explanationUrl = stop.explanationUrl;
-                            fairy.stopName = stopName;
+                            var alignmentElement;
+                            if (fairyScope.showingExplanation && stop.explanationAlignmentElement) {
+                                alignmentElement = angular.element(document.querySelector('#' + stop.explanationAlignmentElement))
+                            } else {
+                                alignmentElement = stop.element;
+                            }
 
-                            fairyScope.classFromStop = stop.fairyClass;
-                            fairyScope.tickle = function () {
-                                //TODO: we should not be sending the fairy out of this code.
-                                //      it is private and we assume we have complete control of it.
-                                stop.tickle({fairy: fairy});
-                            };
-                            $timeout(reposition);
+                            position(fairyElement, alignmentElement, stop.fairyPositioning);
                         });
                 }
-            };
 
-            fairyScope.fairy = fairy;
+                var repositionerPromise = $interval(reposition, 500);
 
-            return fairy;
-        }
+                fairyScope.$watch('showingExplanation', function () {
+                    $timeout(function () {
+                        if (fairyScope) {  //unfortunately angular is triggering this $watch even after fairyScope.$destroy() :(
+                            reposition();
+                        }
+                    });
+                });
 
-        return {
-            getFairy: getFairy,
-            dismissAnyFairiesAtStop: function(stopName) {
-                for (var fairyName in fairies) {
-                    var fairy = fairies[fairyName];
+                fairyScope.$on('$destroy', function () {
+                    $interval.cancel(repositionerPromise);
+                });
 
-                    if (fairy && fairy.stopName === stopName) {
-                        fairy.dismiss();
+                var fairyElement = $compile('<guide-fairy />')(fairyScope);
+                $rootElement.eq(0).append(fairyElement);
+
+                function cancelDismissal() {
+                    if (fairy.dismissalOrder) {
+                        $timeout.cancel(fairy.dismissalOrder);
+                        fairy.dismissalOrder = null;
                     }
                 }
+
+                function dismiss(lingerDelay) {
+                    lingerDelay = lingerDelay || 0;
+                    if (!fairy.dismissalOrder) {
+                        fairy.dismissalOrder = $timeout(function () {
+                            fairyElement.remove();
+                            fairyElement = null;
+                            fairyScope.$destroy();
+                            fairyScope = null;
+                            fairies[fairyName] = null;
+                        }, lingerDelay); //we want to linger around a little in case this fairy is sent somewhere else
+                    }
+                }
+
+                var fairy = {
+                    dismiss: dismiss,
+                    showExplanation: function (explanationUrl) {
+                        cancelDismissal();
+                        if (explanationUrl) {
+                            fairyScope.explanationUrl = explanationUrl;
+                        }
+                        fairyScope.showingExplanation = true;
+                    },
+                    send: function (stopName) {
+                        cancelDismissal();
+                        tracker.getStop(stopName)
+                            .then(function (stop) {
+                                if (!fairyScope) {
+                                    return; //this fairy was destroyed before getStop resolved :(
+                                }
+
+                                fairyScope.showingExplanation = false;
+                                fairyScope.explanationUrl = stop.explanationUrl;
+                                fairy.stopName = stopName;
+
+                                fairyScope.classFromStop = stop.fairyClass;
+                                fairyScope.tickle = function () {
+                                    //TODO: we should not be sending the fairy out of this code.
+                                    //      it is private and we assume we have complete control of it.
+                                    stop.tickle({fairy: fairy});
+                                };
+                                $timeout(reposition);
+                            });
+                    }
+                };
+
+                fairyScope.fairy = fairy;
+
+                return fairy;
             }
-        };
-    }]);
+
+            return {
+                getFairy: getFairy,
+                dismissAnyFairiesAtStop: function (stopName) {
+                    for (var fairyName in fairies) {
+                        var fairy = fairies[fairyName];
+
+                        if (fairy && fairy.stopName === stopName) {
+                            fairy.dismiss();
+                        }
+                    }
+                }
+            };
+        }]);
 
     angularGuide.factory('$$guideStopTrackerService', ['$q', function ($q) {
         var registeredStops = {};
@@ -292,7 +287,7 @@ define([], function () {
         }
 
         function fireDeregistrationListeners(stopName) {
-            angular.forEach(anyStopDeregistrationListeners, function(listener) {
+            angular.forEach(anyStopDeregistrationListeners, function (listener) {
                 listener.callback(stopName);
             })
         }
@@ -334,7 +329,7 @@ define([], function () {
 
                 var newListener = {
                     callback: callback,
-                    unregister: function() {
+                    unregister: function () {
                         var index = listeners.indexOf(newListener);
                         if (index !== -1) {
                             listeners.splice(index, 1);
@@ -352,7 +347,7 @@ define([], function () {
             addGuideStopUnlinkedHandler: function addGuideStopUnlinkedHandler(callback) {
                 var newListener = {
                     callback: callback,
-                    unregister: function() {
+                    unregister: function () {
                         var index = anyStopDeregistrationListeners.indexOf(newListener);
                         if (index !== -1) {
                             anyStopDeregistrationListeners.splice(index, 1);
@@ -369,5 +364,4 @@ define([], function () {
         }
     }]);
 
-    return angularGuide;
-});
+}());
