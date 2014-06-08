@@ -6,7 +6,7 @@
     "Riley Eynon-Lynch <riley@peardeck.com>"
   ],
   "description": "Use fairies to guide your users to the controls and features of your AngularJS app",
-  "main": "dist/js/guide-fairies.js",
+  "main": "dist/guide-fairies.js",
   "keywords": [
     "AngularJS",
     "guide",
@@ -18,6 +18,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
+    "demo",
     "src",
     "bower_components",
     "js/libs",

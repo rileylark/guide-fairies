@@ -15,19 +15,19 @@ gulp.task('build', function () {
 
     streamqueue({ objectMode: true }, compileFairyJs, compileFairyTemplates)
         .pipe(concat('guide-fairies.js'))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest('dist'));
 
     gulp.src('src/demoApp/templates/**/*.jade')
         .pipe(jade({}).on('error', gutil.log))
         .pipe(templateCache())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('demo'));
 
     gulp.src('src/demoApp/demoApp.js')
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest('demo/js'));
 
     gulp.src('./src/demoApp/index.jade')
         .pipe(jade({}).on('error', gutil.log))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('demo'));
 });
 
 gulp.task('dev', ['build'], function () {
