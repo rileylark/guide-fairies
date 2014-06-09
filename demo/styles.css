@@ -12,7 +12,7 @@
     left: 50%;
     top: 50%;
     margin: 0;
-    z-index: 100;
+    z-index: 10000;
 }
 
 .fairy__blip {

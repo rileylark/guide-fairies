@@ -26,7 +26,8 @@ gulp.task('build', function () {
         .pipe(concat('styles.css'))
         .pipe(gulp.dest('demo'));
 
-    gulp.src('src/demoApp/demoApp.js')
+    gulp.src('src/demoApp/**/*.js')
+        .pipe(concat('demoApp.js'))
         .pipe(gulp.dest('demo/js'));
 
     gulp.src('./src/demoApp/index.jade')
