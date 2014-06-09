@@ -17,18 +17,22 @@ gulp.task('build', function () {
         .pipe(concat('guide-fairies.js'))
         .pipe(gulp.dest('dist'));
 
-    gulp.src('src/demoApp/templates/**/*.jade')
+    var compileDemoTemplates = gulp.src('src/demoApp/templates/**/*.jade')
         .pipe(jade({}).on('error', gutil.log))
-        .pipe(templateCache())
-        .pipe(gulp.dest('demo'));
+        .pipe(templateCache({module: 'FairyDemo'}));
+
+
+    var compileDemoJs = gulp.src('src/demoApp/**/*.js')
+        .pipe(concat('demoApp.js'));
+
+    streamqueue({ objectMode: true }, compileDemoJs, compileDemoTemplates)
+        .pipe(concat('demoApp.js'))
+        .pipe(gulp.dest('demo/js'));
 
     gulp.src('src/demoApp/**/*.css')
         .pipe(concat('styles.css'))
         .pipe(gulp.dest('demo'));
 
-    gulp.src('src/demoApp/**/*.js')
-        .pipe(concat('demoApp.js'))
-        .pipe(gulp.dest('demo/js'));
 
     gulp.src('./src/demoApp/index.jade')
         .pipe(jade({}).on('error', gutil.log))

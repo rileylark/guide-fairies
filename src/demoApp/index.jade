@@ -33,14 +33,11 @@ html
     .container
 
       .row
-        .col-lg-6
-          h1 Uses!
-
+        .col-lg-12
           accordion(close-others='true')
-            accordion-group(heading='Static header, initially expanded')
-              div Content!
-            accordion-group(heading='Another one!')
-              h1 Another thing!
+            accordion-group(ng-repeat='usageExample in usageExamples'
+                            heading='{{usageExample.heading}}')
+              ng-include(src='usageExample.templateUrl')
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js')
 

@@ -13,5 +13,11 @@
             $scope.introModalShowing = false;
         };
 
+        $scope.usageExamples = [
+            {
+                heading: 'A simple fairy to welcome users and teach them to click fairies',
+                templateUrl: 'usageExamples/simpleIntro.html'
+            }
+        ]
     }]);
 }());
