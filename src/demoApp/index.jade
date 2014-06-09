@@ -6,7 +6,7 @@ html
     link(rel='stylesheet', href='styles.css')
 
 
-  body(ng-app='FairyDemo', ng-controller='MainDemoController')
+  body(ng-app='FairyDemo', ng-controller='MainDemoController as demoController')
 
     .modal-backdrop.fade.in(ng-if='introModalShowing')
     .modal.fade.in(style='display: block', ng-if='introModalShowing')
@@ -35,9 +35,14 @@ html
       .row
         .col-lg-12
           accordion(close-others='true')
-            accordion-group(ng-repeat='usageExample in usageExamples'
-                            heading='{{usageExample.heading}}')
-              ng-include(src='usageExample.templateUrl')
+            accordion-group(is-open='demoController.firstUsageExampleOpen')
+              accordion-heading
+                div(guide-stop='firstUsageExample',
+                    guide-fairy-positioning='left',
+                    guide-on-fairy-tickle='openFirstUsageExample()')
+                  | A simple fairy to welcome users and teach them to click fairies
+
+              ng-include(src='"usageExamples/simpleIntro.html"')
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js')
 
