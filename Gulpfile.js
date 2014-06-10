@@ -17,7 +17,7 @@ gulp.task('build', function () {
         .pipe(concat('guide-fairies.js'))
         .pipe(gulp.dest('dist'));
 
-    var compileDemoTemplates = gulp.src('src/demoApp/templates/**/*.jade')
+    var compileDemoTemplates = gulp.src(['src/demoApp/**/*.jade', '!src/demoApp/index.jade'])
         .pipe(jade({}).on('error', gutil.log))
         .pipe(templateCache({module: 'FairyDemo'}));
 

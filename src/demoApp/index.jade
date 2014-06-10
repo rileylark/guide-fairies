@@ -41,7 +41,15 @@ html
                     guide-on-fairy-tickle='openFirstUsageExample()')
                   | A simple fairy to welcome users and teach them to click fairies
 
-              ng-include(ng-if='demoController.firstUsageExampleOpen', src='"example1/simpleIntro.html"')
+              ng-include(src='"example1/simpleIntro.html"')
+
+            accordion-group
+              accordion-heading A fairy with an explanation for a complex feature
+              div what
+
+            accordion-group
+              accordion-heading A set of fairies to form a visual checklist
+              div who??
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js')
 
