@@ -50,5 +50,13 @@
             }
         });
 
+        $scope.$watch('demoController.exampleStates[1].open', function(open) {
+            if (open) {
+                guideFairies.showStop('eruminate-your-rendolence', 'RENDOLENT_FAIRY');
+            } else {
+                guideFairies.dismissFairy('eruminate-your-rendolence');
+            }
+        });
+
     }]);
 }());

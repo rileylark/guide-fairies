@@ -1,2 +1,27 @@
-button.btn.btn-danger.btn-lg(guide-stop='exacerbate-explanation')
-  | Exacerbate
+.row
+  .col-lg-4(ng-init='selectedFeature = "Manage Tasks"')
+    .btn-group-vertical(ng-init='possibleFeatures = ["Manage Tasks", "Check Your Email", "Empower Your Users", "Analytics", "Log Out"]')
+      button.btn.btn-default.btn-lg(ng-repeat='feature in possibleFeatures'
+                                    ng-click='$parent.selectedFeature = feature')
+        | {{feature}}
+
+      button.btn.btn-default.btn-lg(ng-click='$parent.selectedFeature = "Eruminate Your Rendolence"'
+                                    guide-stop = 'eruminate-your-rendolence'
+                                    guide-fairy-class = 'special-fairy-class-for-explainers'
+                                    guide-explanation-template-url = 'examples/simpleIntro__eruminate.html'
+                                    )
+        | Eruminate Your Rendolence
+  .col-lg-8
+      div(ng-if='$parent.selectedFeature == "Eruminate Your Rendolence"')
+        h3 {{selectedFeature}}
+        p Honestly, your user has no chance of understanding this crazy interface without at least some context.
+        p I recommend you redesign until your interface is easy to understand, but if you don't have time for that,
+          | you could use a fairy to explain something. They are less annoying than modal popups and less invisible
+          | than explanatory text.
+
+
+      div(ng-if='$parent.selectedFeature != "Eruminate Your Rendolence"')
+        h3 {{selectedFeature}}
+        p This feature has an easy interface that everyone can quickly understand.
+        p.well Note: an explanation might still be useful for helping your users feel powerful, with a tip for
+          | extremely effective use or an affirmation of how great your user is when he "{{selectedFeature}}"s

@@ -62,6 +62,10 @@
     margin-left: -22px;
     margin-top: 3px;
 }
+
+.special-fairy-class-for-explainers .fairy__radiator {
+    color: blue;
+}
 /* From http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css */
 
 /* Space out content a bit */

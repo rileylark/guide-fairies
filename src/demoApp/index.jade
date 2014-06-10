@@ -43,7 +43,7 @@ html
 
               ng-include(src='"examples/simpleIntro.html"')
 
-            accordion-group
+            accordion-group(is-open='demoController.exampleStates[1].open')
               accordion-heading A fairy with an explanation for a complex feature
               ng-include(src='"examples/explainFeature.html"')
 
