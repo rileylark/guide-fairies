@@ -34,18 +34,18 @@ html
       .row
         .col-lg-12
           accordion(close-others='true')
-            accordion-group(is-open='demoController.firstUsageExampleOpen')
+            accordion-group(is-open='demoController.exampleStates[0].open')
               accordion-heading
                 div(guide-stop='firstUsageExample',
                     guide-fairy-positioning='left',
-                    guide-on-fairy-tickle='openFirstUsageExample()')
+                    guide-on-fairy-tickle='demoController.exampleStates[0].open = true')
                   | A simple fairy to welcome users and teach them to click fairies
 
-              ng-include(src='"example1/simpleIntro.html"')
+              ng-include(src='"examples/simpleIntro.html"')
 
             accordion-group
               accordion-heading A fairy with an explanation for a complex feature
-              div what
+              ng-include(src='"examples/explainFeature.html"')
 
             accordion-group
               accordion-heading A set of fairies to form a visual checklist

@@ -18,6 +18,7 @@
 
         var demoController = this;
 
+        //intro modal
         guideFairies.showStop('showFeaturesButton', 'WELCOME_FAIRY');
 
         $scope.introModalShowing = true;
@@ -27,13 +28,25 @@
             guideFairies.showStop('firstUsageExample', 'WELCOME_FAIRY');
         };
 
-        $scope.openFirstUsageExample = function() {
-            demoController.firstUsageExampleOpen = true;
-        };
+        //examples
+        demoController.exampleStates = [];
+        for (var i = 0; i < 3; i++) {
+            demoController.exampleStates.push({open: false});
+        }
 
-        $scope.$watch('demoController.firstUsageExampleOpen', function(open) {
+        function getExampleState(index) {
+            if (!demoController.exampleStates[index]) {
+                demoController.exampleStates[index] = {};
+            }
+
+            return demoController.exampleStates[index];
+        }
+
+        $scope.$watch('demoController.exampleStates[0].open', function(open) {
             if (open) {
-                guideFairies.dismissFairy('firstUsageExample');
+                guideFairies.showStop('example-1-action', 'WELCOME_FAIRY');
+            } else {
+                guideFairies.dismissFairy('example-1-action');
             }
         });
 
