@@ -1,20 +1,30 @@
 (function () {
     'use strict';
 
-    console.log("Creating demoApp");
     var demoApp = angular.module('FairyDemo', ['guide-fairies', 'ui.bootstrap']);
 
-    demoApp.controller('MainDemoController', ['guideService', '$scope', function(guideService, $scope) {
+    demoApp.directive('prettyprint', function() {
+        // from http://stackoverflow.com/questions/21081950/calling-prettyprint-dynamically-in-angularjs-ruins-binding
+        return {
+            restrict: 'C',
+            link: function postLink(scope, element, attrs) {
+                console.log("Getting: ", element.html());
+                element.html(prettyPrintOne(element.html()), '', true);
+            }
+        };
+    });
+
+    demoApp.controller('MainDemoController', ['guideFairies', '$scope', function(guideFairies, $scope) {
 
         var demoController = this;
 
-        guideService().showStop('showFeaturesButton', 'WELCOME_FAIRY');
+        guideFairies.showStop('showFeaturesButton', 'WELCOME_FAIRY');
 
         $scope.introModalShowing = true;
 
         $scope.hideIntroModal = function() {
             $scope.introModalShowing = false;
-            guideService().showStop('firstUsageExample', 'WELCOME_FAIRY');
+            guideFairies.showStop('firstUsageExample', 'WELCOME_FAIRY');
         };
 
         $scope.openFirstUsageExample = function() {
@@ -23,7 +33,7 @@
 
         $scope.$watch('demoController.firstUsageExampleOpen', function(open) {
             if (open) {
-                guideService().dismissFairy('firstUsageExample');
+                guideFairies.dismissFairy('firstUsageExample');
             }
         });
 

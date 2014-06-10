@@ -29,7 +29,6 @@ html
                                                 guide-fairy-class='fairy--read-on-button')
                     | See how
 
-
     .container
 
       .row
@@ -42,7 +41,7 @@ html
                     guide-on-fairy-tickle='openFirstUsageExample()')
                   | A simple fairy to welcome users and teach them to click fairies
 
-              ng-include(src='"usageExamples/simpleIntro.html"')
+              ng-include(ng-if='demoController.firstUsageExampleOpen', src='"usageExamples/simpleIntro.html"')
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js')
 
@@ -51,3 +50,6 @@ html
 
     // replace demoApp.js with your app
     script(src='js/demoApp.js')
+
+    link(rel='stylesheet', href='https://google-code-prettify.googlecode.com/svn/loader/prettify.css')
+    script(src="https://google-code-prettify.googlecode.com/svn/loader/prettify.js")

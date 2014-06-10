@@ -21,7 +21,7 @@
         };
     }]);
 
-    angularGuide.factory('guideService',
+    angularGuide.factory('guideFairies',
         ['$$fairyManagementService', '$$guideStopTrackerService',
             function (fairyManagementService, tracker) {
 
@@ -48,9 +48,7 @@
                     fairyManagementService.dismissAnyFairiesAtStop(stopName);
                 });
 
-                return function () {
-                    return guide;
-                };
+                return guide;
             }]);
 
     angularGuide.directive('guideStop', ['$$guideStopTrackerService', function (tracker) {

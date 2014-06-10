@@ -1,5 +1,27 @@
-p When a new user opens your app it should be very clear what they should do first. This makes it easier for people to understand what's happening and quickly do something "right."
-p Adding a fairy to this action is cute and friendly, and also associates the fairies with actions -
-  | safe, useful actions. This initial fairy isn't necessary to teach a new person how to do the right action,
-  | because that's already so simple that no one could miss it. The first fairy is just to teach people what the
-  | fairies do, what you can expect out of them, and that they can be trusted.
+div(ng-controller='example1Controller as example1Controller')
+  div(ng-if='!example1Controller.clickedButton')
+    p When a new user opens your app it should be very clear what they should do first. This makes it easier for people to understand what's happening and quickly do something "right."
+    p Adding a fairy to this action is cute and friendly, and also associates the fairies with actions -
+      | safe, useful actions. This initial fairy isn't necessary to teach a new person how to do the right action,
+      | because that's already so simple that no one could miss it. The first fairy is just to teach people what the
+      | fairies do, what you can expect out of them, and that they can be trusted.
+
+    center
+      button.btn.btn-primary.btn-lg(ng-click='example1Controller.clickedButton = true'
+        guide-stop='example-1-action'
+        guide-on-fairy-tickle='example1Controller.clickedButton = true'
+        guide-fairy-class='fairy--read-on-button')
+          | There's only one thing to do
+
+      p.small (and it teaches you what fairies are even if you won't read my copy)
+
+  div(ng-if='example1Controller.clickedButton')
+    p Here's what the code looks like.
+    pre.prettyprint.
+      &lt;button guide-stop='example-1-action'&gt;
+          There's only one thing to do
+      &lt;/button&gt;
+
+    pre.prettyprint.
+      guideFairies.showStop('example-1-action'); // this stop id matches
+                                                 // the guide-stop value
