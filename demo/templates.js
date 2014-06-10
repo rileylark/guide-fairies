@@ -1,1 +1,0 @@
-angular.module("templates").run(["$templateCache", function($templateCache) {$templateCache.put("usageExamples/simpleIntro.html","<p>When a new user opens your app there should only be a single thing for them to focus on.</p>");}]);
