@@ -1,18 +1,23 @@
 .row
   .col-lg-4(ng-init='selectedFeature = "Manage Tasks"')
-    .btn-group-vertical(ng-init='possibleFeatures = ["Manage Tasks", "Check Your Email", "Empower Your Users", "Analytics", "Log Out"]')
-      button.btn.btn-default.btn-lg(ng-repeat='feature in possibleFeatures'
+    .btn-group-vertical
+      button.btn.btn-default.btn-lg(ng-repeat='feature in ["Manage Tasks", "Check Your Email", "Empower Your Users"] track by $index'
                                     ng-click='$parent.selectedFeature = feature')
         | {{feature}}
 
-      button.btn.btn-default.btn-lg(ng-click='$parent.selectedFeature = "Eruminate Your Rendolence"'
+      button.btn.btn-default.btn-lg(ng-click='selectedFeature = "Eruminate Your Rendolence"'
                                     guide-stop = 'eruminate-your-rendolence'
                                     guide-fairy-class = 'special-fairy-class-for-explainers'
                                     guide-explanation-template-url = 'examples/simpleIntro__eruminate.html'
                                     )
         | Eruminate Your Rendolence
+
+      button.btn.btn-default.btn-lg(ng-repeat='feature in ["Analytics", "Log Out"] track by $index'
+        ng-click='$parent.selectedFeature = feature')
+          | {{feature}}
+
   .col-lg-8
-      div(ng-if='$parent.selectedFeature == "Eruminate Your Rendolence"')
+      div(ng-if='selectedFeature == "Eruminate Your Rendolence"')
         h3 {{selectedFeature}}
         p Honestly, your user has no chance of understanding this crazy interface without at least some context.
         p I recommend you redesign until your interface is easy to understand, but if you don't have time for that,
@@ -20,7 +25,7 @@
           | than explanatory text.
 
 
-      div(ng-if='$parent.selectedFeature != "Eruminate Your Rendolence"')
+      div(ng-if='selectedFeature != "Eruminate Your Rendolence"')
         h3 {{selectedFeature}}
         p This feature has an easy interface that everyone can quickly understand.
         p.well Note: an explanation might still be useful for helping your users feel powerful, with a tip for

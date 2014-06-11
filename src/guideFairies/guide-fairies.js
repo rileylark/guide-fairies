@@ -213,6 +213,8 @@
                     }
                 }
 
+                fairyScope.dismissFairy = dismiss;
+
                 var fairy = {
                     dismiss: dismiss,
                     showExplanation: function (explanationUrl) {
