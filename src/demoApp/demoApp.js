@@ -3,60 +3,92 @@
 
     var demoApp = angular.module('FairyDemo', ['guide-fairies', 'ui.bootstrap']);
 
-    demoApp.directive('prettyprint', function() {
-        // from http://stackoverflow.com/questions/21081950/calling-prettyprint-dynamically-in-angularjs-ruins-binding
+    demoApp.factory('appSpecificGuideService', ['guideFairies', function(guideFairies) {
+        // I'd recommend splitting all of your guide-fairy logic that will be specific to your app into its own
+        // service. This makes it easier to see all your fairy flows in one spot, and it makes it easier to figure
+        // out what is going on in other places of your code, too. When you see a hook elsewhere that specifically
+        // references your appSpecificGuideService, it's a lot clearer than just seeing something like
+        // $scope.$broadcast('chose-nav-option-1') and having to search for all the places that consume that event
+
+        // In this specific app, I know each of my example segments has a list of fairies that should appear
+        // automatically, so I can code that directly here.
+
+        var stopsToShowAutomaticallyForEachExample = {
+            0: [{stopName: 'example-1-action', fairyName: 'WELCOME_FAIRY'}],
+            1: [{stopName: 'eruminate-your-rendolence'}],
+            2: [{stopName: 'checklist-1'}, {stopName: 'checklist-2'}, {stopName: 'checklist-3'}]
+        };
+
         return {
-            restrict: 'C',
-            link: function postLink(scope, element, attrs) {
-                console.log("Getting: ", element.html());
-                element.html(prettyPrintOne(element.html()), '', true);
+            signalAppLoaded: function() {
+                guideFairies.showStop('showFeaturesButton', 'WELCOME_FAIRY');
+            },
+
+            signalIntroModalClosed: function() {
+                guideFairies.showStop('firstUsageExample', 'WELCOME_FAIRY');
+            },
+
+            userOpenedExample: function(exampleNumber) {
+                var stops = stopsToShowAutomaticallyForEachExample[exampleNumber];
+                angular.forEach(stops, function(stop) {
+                    guideFairies.showStop(stop.stopName, stop.fairyName);
+                });
+            },
+
+            userClosedExample: function(exampleNumber) {
+                var stops = stopsToShowAutomaticallyForEachExample[exampleNumber];
+                angular.forEach(stops, function(stop) {
+                    guideFairies.dismissFairy(stop.stopName);
+                });
+            },
+
+            signalVisualChecklistFeatureSelected: function(featureNumber) {
+                guideFairies.dismissFairy('checklist-' + featureNumber);
             }
         };
-    });
 
-    demoApp.controller('MainDemoController', ['guideFairies', '$scope', function(guideFairies, $scope) {
+    }]);
+
+    demoApp.controller('MainDemoController', ['appSpecificGuideService', '$scope', function(appSpecificGuideService, $scope) {
 
         var demoController = this;
 
-        //intro modal
-        guideFairies.showStop('showFeaturesButton', 'WELCOME_FAIRY');
+        // I implemented these little hooks so that the main app could just signal the guide service
+        // with succinct, semantic calls like this one. You could use an event bus or anything else to implement this.
+        appSpecificGuideService.signalAppLoaded();
 
         $scope.introModalShowing = true;
 
         $scope.hideIntroModal = function() {
             $scope.introModalShowing = false;
-            guideFairies.showStop('firstUsageExample', 'WELCOME_FAIRY');
+            appSpecificGuideService.signalIntroModalClosed();
         };
 
-        //examples
         demoController.exampleStates = [];
-        for (var i = 0; i < 3; i++) {
+
+        angular.forEach([0, 1, 2, 3], function(indexNumber) {
             demoController.exampleStates.push({open: false});
-        }
 
-        function getExampleState(index) {
-            if (!demoController.exampleStates[index]) {
-                demoController.exampleStates[index] = {};
-            }
-
-            return demoController.exampleStates[index];
-        }
-
-        $scope.$watch('demoController.exampleStates[0].open', function(open) {
-            if (open) {
-                guideFairies.showStop('example-1-action', 'WELCOME_FAIRY');
-            } else {
-                guideFairies.dismissFairy('example-1-action');
-            }
-        });
-
-        $scope.$watch('demoController.exampleStates[1].open', function(open) {
-            if (open) {
-                guideFairies.showStop('eruminate-your-rendolence', 'RENDOLENT_FAIRY');
-            } else {
-                guideFairies.dismissFairy('eruminate-your-rendolence');
-            }
+            $scope.$watch('demoController.exampleStates[' + indexNumber + '].open', function(newOpen) {
+                if (newOpen) {
+                    appSpecificGuideService.userOpenedExample(indexNumber);
+                } else {
+                    appSpecificGuideService.userClosedExample(indexNumber);
+                }
+            });
         });
 
     }]);
+
+
+    demoApp.directive('prettyprint', function() {
+        // from http://stackoverflow.com/questions/21081950/calling-prettyprint-dynamically-in-angularjs-ruins-binding
+        return {
+            restrict: 'C',
+            link: function postLink(scope, element, attrs) {
+                element.html(prettyPrintOne(element.html()), '', true);
+            }
+        };
+    });
+
 }());

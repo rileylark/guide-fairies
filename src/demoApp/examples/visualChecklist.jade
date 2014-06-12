@@ -1,0 +1,32 @@
+div(ng-controller='visualChecklistController as visualChecklistController')
+  p Maybe your app has a few different features that your user might be interested in. If you can't count on a certain
+    | priority in which to introduce the features, a subtle fairy at each point can serve as standing reminders to check
+    | out the features later.
+
+  .navbar.navbar-default
+
+    .container-fluid
+      .navbar-header
+        span.navbar-brand AMAZING NAV UI
+
+      .collapse.navbar-collapse
+
+
+        ul.nav.navbar-nav
+          li(ng-repeat = 'featureNumber in [1, 2, 3] track by $index'
+             ng-class = '{"active": visualChecklistController.selectedFeature == featureNumber}'
+          )
+            a(ng-click='visualChecklistController.selectedFeature = featureNumber'
+              guide-stop='checklist-{{featureNumber}}'
+              guide-on-fairy-tickle='visualChecklistController.selectedFeature = featureNumber'
+            ) Feature {{ featureNumber }}
+
+  .well
+    h1 Feature {{visualChecklistController.selectedFeature}}
+    p This would be the interface for feature {{visualChecklistController.selectedFeature}}.
+      | There's no urgency for the user to try out the other
+      | features right now, but the fairies serve as cute little reminders that there is other stuff to try.
+
+    p You could even do something like highlighting feature [2] on the user's third visit, if he's never tried feature [2]
+      | before. Or, if you saw her using feature x a lot, and that was especially complementary to feature y, maybe suggest
+      | it with a little fairy!

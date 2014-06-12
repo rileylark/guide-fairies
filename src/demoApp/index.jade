@@ -47,9 +47,9 @@ html
               accordion-heading A fairy with an explanation for a complex feature
               ng-include(src='"examples/explainFeature.html"')
 
-            accordion-group
+            accordion-group(is-open='demoController.exampleStates[2].open')
               accordion-heading A set of fairies to form a visual checklist
-              div who??
+              ng-include(src='"examples/visualChecklist.html"')
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js')
 
