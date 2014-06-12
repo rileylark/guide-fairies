@@ -18,6 +18,7 @@ div(ng-controller='visualChecklistController as visualChecklistController')
           )
             a(ng-click='visualChecklistController.selectedFeature = featureNumber'
               guide-stop='checklist-{{featureNumber}}'
+              guide-fairy-class='fairy--read-on-button'
               guide-on-fairy-tickle='visualChecklistController.selectedFeature = featureNumber'
             ) Feature {{ featureNumber }}
 

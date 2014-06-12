@@ -22,7 +22,7 @@
         var stopsToShowAutomaticallyForEachExample = {
             0: [{stopName: 'example-1-action', fairyName: 'WELCOME_FAIRY'}],
             1: [{stopName: 'eruminate-your-rendolence'}],
-            2: [{stopName: 'checklist-1'}, {stopName: 'checklist-2'}, {stopName: 'checklist-3'}]
+            2: [{stopName: 'checklist-2'}, {stopName: 'checklist-3'}]
         };
 
         return {
