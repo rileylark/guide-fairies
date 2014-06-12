@@ -1,13 +1,29 @@
-.container(style = 'background-color: white; border: 1px solid gray; border-radius: 5px; max-width: 300px')
+.container(style = 'background-color: white; border: 1px solid gray; border-radius: 5px; max-width: 500px')
   .row
     .col-sm-12
       h4 Rendolent Erumination
       p This is a quick explanation of how eruminating rendolently can help you be better at your job. You're going
         | to feel like you've got superpowers after you start using this tool!
 
+      p
+        a(href='https://www.youtube.com/watch?v=dQw4w9WgXcQ', target='_blank') Learn More
   .row
-    .col-sm-6
-      button.btn.btn-default(ng-click='dismissFairy()') Got it!
+    .col-sm-12
+      pre.prettyprint.
+        &lt;button
+            guide-stop = 'example-1-action'
+            guide-fairy-class = 'custom-class'
+            guide-explanation-template-url = 'explanation.html'&gt;
+                Eruminate Your Rendolence
+        &lt;/button&gt;
 
-    .col-sm-6
-      a(href='https://www.youtube.com/watch?v=dQw4w9WgXcQ', target='_blank') Learn More
+  .row
+    .col-sm-12
+      p Notice how your fairy display code works directly into your markup. I thought this was the easiest way to
+        | tell the fairies exactly where to go. It also makes it easy to see how css classes are related, etc.
+      p But: the javascript controlling these fairies can be completely separated into a separate module. The logic
+        | for running the fairies does not need to be entwined with the logic for running your normal application. Perfect!
+
+  .row
+    .col-sm-12
+      button.btn.btn-default(ng-click='dismissFairy()') Got it!
