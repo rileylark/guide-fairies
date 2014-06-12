@@ -9,6 +9,12 @@
         // out what is going on in other places of your code, too. When you see a hook elsewhere that specifically
         // references your appSpecificGuideService, it's a lot clearer than just seeing something like
         // $scope.$broadcast('chose-nav-option-1') and having to search for all the places that consume that event
+        //
+        // This sort of practice isolates your main app from the third-party library, and if you want to swap out
+        // guideFairies later (or get rid of it) you only have to look at this one file to see all of your dependency
+        // on it. Tight!
+        //
+        // Also, tests for this module would be so easy to write!
 
         // In this specific app, I know each of my example segments has a list of fairies that should appear
         // automatically, so I can code that directly here.
@@ -64,8 +70,9 @@
             appSpecificGuideService.signalIntroModalClosed();
         };
 
+        // The following code is so cumbersome because I don't know of any events fired when the accordions open.
+        // The proper place for this code is in the accordion, but that change is beyond the scope of this demo ;)
         demoController.exampleStates = [];
-
         angular.forEach([0, 1, 2, 3], function(indexNumber) {
             demoController.exampleStates.push({open: false});
 
